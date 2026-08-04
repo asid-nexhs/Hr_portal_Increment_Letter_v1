@@ -1,0 +1,143 @@
+@page { 
+    size: A4; 
+    margin-top: 1.5cm;
+    margin-right: 1.2cm;
+    margin-bottom: 2cm;
+    margin-left: 1.2cm;
+}
+
+body {  
+    font-family: 'DejaVu Sans', Arial, sans-serif; 
+    font-size: 11px; 
+    line-height: 1.3; 
+    margin: 0;
+    padding: 0;
+}
+
+.confidential { 
+    text-align: center; 
+    text-decoration: underline; 
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 12pt; 
+}
+
+.header-line { 
+    margin: 2px 0; 
+}
+
+/* Table Styles */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 10px 0; 
+    border: 1px solid #000; 
+    page-break-inside: avoid;
+}
+
+th, td { 
+    border: 1px solid #000; 
+    text-align: left; 
+    padding: 4px 0;
+}
+
+th {    
+    background-color: #f2f2f2; 
+    font-weight: bold; 
+}
+
+/* Container for tables to respect margins */
+.table-wrapper {
+    margin: 0;
+    padding: 0;
+}
+
+p { 
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 12pt;
+    margin: 4px 0;
+}
+
+.signature { 
+    margin-top: 35px; 
+    display: flex; 
+    justify-content: space-between; 
+    border: none;
+    font-family: aptos;
+    font-size: 12pt;
+    font-weight: bold;
+    justify-items: left;
+}
+
+.signature table{
+    border: none;
+}
+
+.signature td,th {
+    text-align: left;
+    justify-content: left;
+}
+
+h2 {    
+    text-align: center; 
+    text-decoration: underline; 
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 12pt; 
+}
+
+/* HR replacement using border */
+.hr-divider {
+    border: none;
+    border-top: 1px solid #000;
+    margin: 15px 0;
+    height: 0;
+    width: 100%;
+}
+
+.TermsAndConditions p{
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 10pt; 
+    word-spacing: 1.5pt;
+    text-align: justify; 
+}
+
+.TermsAndConditions h2 {
+    text-align: left; 
+    text-decoration: solid; 
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 12pt; 
+    word-spacing: 1.5pt;
+    margin: 8px 0 2px 0;
+}
+
+.bold { 
+    font-weight: bold; 
+}
+
+.text-center { 
+    text-align: center; 
+}
+
+.indent { 
+    margin-left: 20px; 
+}
+
+.small-text { 
+    font-size: 9px; 
+}
+
+.pdf-header {
+        position: fixed;
+        top: -75px;
+        left: 1.2cm;
+        right: 1.2cm;
+        margin-right: -1cm;
+        margin-left: -1cm;
+}
+
+.pdf-header hr {
+    margin-left: 1.5cm;
+    margin-right: 1.5cm;
+    border: 0;
+    border-top: 1px solid #000;
+    width: 500pt;
+}

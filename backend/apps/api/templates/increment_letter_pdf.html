@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+{% load static %}
+{% load indian_numbers %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Increment Letter - {{ letter.employee_name }}</title>
+    <link rel="stylesheet" href="{% static 'css/increment_letter.css' %}" media="all">
+     <!-- <link rel="stylesheet" href="D:/Automation/Hr_team/Hr_portal/hr_portal/backend/static/css/increment_letter.css" media="all"> -->
+    <style>
+        .page1 p{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            text-align: justify;
+        }
+
+    </style>
+</head>
+<body>
+    <div style="margin-left: 1.27cm; margin-right: 1.27cm;">
+
+        <div id="page-header">
+            {% include "header.html" %}
+        </div>
+
+        <div class="content">
+
+
+            <div class="confidential" style="text-align: center;"><strong>PRIVATE & CONFIDENTIAL</strong></div>
+            
+            <strong>
+                <p class="header-line" style="text-align: right;"><strong>Date :</strong> {{ letter.letter_date }}</p>
+                <p class="header-line"><strong>Name :</strong> {{ letter.employee_name }}</p>
+                <p class="header-line"><strong>Employee ID :</strong> {{ letter.employee_id }}</p>
+                <p class="header-line"><strong>Designation :</strong> {{ letter.designation }}</p>
+                <p class="header-line"><strong>Ref. No.-</strong> {{ letter.ref_no }}</p>
+            </strong>
+
+            <h2 class="text-center">Increment Letter</h2>
+            
+            <p>Dear <strong>{{ letter.employee_name }}</strong>,</p>
+
+            <div class="page1">
+                
+                <p>As we embark on another year of excellence, we sincerely thank you for your valuable contributions and dedicated efforts towards the organization's performance during the financial year <strong>2025–26</strong>. Your commitment and consistent performance are highly appreciated.</p>
+                
+                <p>In recognition of your performance and continued efforts, we are pleased to inform you that your <strong>gross salary has been revised to Rs.{{ gross_a|indian_number }}/- per month</strong>, along with a <strong>Retention Bonus</strong>, effective from <strong>1st April 2026</strong>. The detailed breakup of your revised compensation structure is enclosed as <strong>Annexure A</strong> for your reference.</p>
+                
+                <p>Further, based on your performance and the overall performance of the organization, the Company is pleased to <strong>award you the Performance Linked Variable Pay</strong>, as detailed in Annexure B, along with the <strong>FY 2025–26 variable pay</strong>, as provided in Annexure C. These amounts will be <strong>paid annually</strong>, in accordance with company policy.</p>
+                
+                {% if letter.promotion_designation %}
+                <p>Additionally, in recognition of your contributions, we are pleased to inform you of your <strong>promotion</strong>, and you are hereby <strong>Promoted as "{{ letter.promotion_designation }}"</strong>, effective from <strong>1st April 2026</strong>.</p>
+                {% endif %}
+                
+                <p>Please note that the contents of this letter, including your compensation details, are <strong>strictly confidential</strong> and must not be disclosed or discussed with anyone within or outside the organization.</p>
+                
+                <p>You are requested to kindly acknowledge your acceptance of the revised terms and conditions mentioned in this letter by signing and returning a duplicate copy of this letter.</p>
+            
+            </div>
+                
+            <p style="text-align: center;"><strong>Wishing you all the very best!!!</strong></p>
+            
+            <p>
+                For NeXHS Renewables Pvt. Ltd.,<br><br>
+            </p>
+
+            <div class="signature">
+                <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 40px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 50%; text-align: left; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>Sudhansu Bhusan Prusty</strong><br>
+                                <strong>Managing Director</strong>
+                            </td>
+                            <td style="width: 50%; text-align: right; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>{{ letter.employee_name }}</strong><br>
+                                <strong>
+                                    {% if letter.promotion_designation %}
+                                        {{ letter.promotion_designation }}
+                                    {% else %}
+                                        {{ letter.designation }}
+                                    {% endif %}
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            
+            
+            <pdf:nextpage>
+            <div id="page-header">
+            {% include "header.html" %}
+            </div>
+            <br><br>
+            <!-- Revised Terms and Conditions (same for both) -->
+            <div class="TermsAndConditions">
+
+                <h1 style="font-size: 12pt;">Revised Terms and Conditions:</h1>
+                <p>I hereby acknowledge and agree to the following terms and conditions:</p>
+                
+                <h2>1. Acceptance of Revised Salary</h2>
+                <p>I agree to the revised gross salary as mentioned in the increment letter and unconditionally undertake to continue my employment with the Company for a minimum period of <strong>one (1) year</strong> from the Effective Date, as defined in the increment letter.</p>
+                
+                <h2>2. Compliance with Company Policies</h2>
+                <p>undertake to abide by all the rules, regulations, policies, and employment terms of the Company, as applicable from time to time.</p>
+                
+                <h2>3. Performance Expectations</h2>
+                <p>I understand that the revised compensation is based on my current role, responsibilities, and performance. Any future growth in compensation will depend on my performance, contribution to organizational goals, and adherence to Company policies.</p>
+                
+                <h2>4. Client Confidentiality</h2>
+                <p>I acknowledge that I may have access to confidential client information, including business data, contacts, processes, and commercial terms. I unconditionally agree to maintain strict confidentiality of such information during and after my employment and shall not disclose it to any third party without prior written consent from the Company.</p>
+                
+                <h2>5. Salary Confidentiality</h2>
+                <p>I understand that my salary structure and compensation details are strictly confidential. I agree not to disclose or discuss such information with any internal or external parties, except where required by law or expressly authorized by the Company.</p>
+                
+                <h2>6. Notice Period Obligation</h2>
+                <p>In the event of resignation, I agree to serve the required notice period as specified in my appointment letter from the date of submission of resignation.</p>
+                
+                <h2>7. Non-Compete, Non-Solicitation / Client Engagement Restriction</h2>
+                <p>I acknowledge that, upon resignation, I shall not join with any competitors or commencing a rival business besides I shall not engage directly or indirectly with any customers, clients, suppliers, contractors of <strong>NeXHS Renewables Private Limited</strong> for a period of <strong>one (1) year</strong> from the date of my relieving, in any capacity that may conflict with the Company's business interests.</p>
+                
+                <h2>8. Exit Formalities</h2>
+                <p>I understand that all exit formalities, including full and final settlement, handover of responsibilities, and clearance procedures, must be completed at the Company's <strong>Head Office in Chennai</strong> in person prior to my last working day.</p>
+            </div>
+            
+            <p>For NeXHS Renewables Pvt. Ltd.,</p></br>
+            
+            <div class="signature">
+                <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 40px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 50%; text-align: left; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>Sudhansu Bhusan Prusty</strong><br>
+                                <strong>Managing Director</strong>
+                            </td>
+                            <td style="width: 50%; text-align: right; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>{{ letter.employee_name }}</strong><br>
+                                <strong>
+                                    {% if letter.promotion_designation %}
+                                        {{ letter.promotion_designation }}
+                                    {% else %}
+                                        {{ letter.designation }}
+                                    {% endif %}
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <pdf:nextpage>
+            <div id="page-header">
+            {% include "header.html" %}
+            </div>
+
+            <!-- Annexure A -->    
+
+            <div class="table-container">     
+            <table style="width:80%; border-collapse: collapse; table-layout:auto; justify-items: center;" >
+                <thead>
+                    <tr>
+                        <th colspan="4" style="border:1px solid black; text-align: center; column-width: 100;">Annexure - A</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4" style="border:1px solid black; text-align: center; column-width: 100;">Compensation Details - FY 2026-27</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" style="border:1px solid black; text-align: center;"><strong>Total Cost to Company (Annexure A+B)</strong></th>
+                        <th colspan="1" style="border:1px solid black; text-align: center;">Rs.{{ gross_a_annual|add:gross_b_annual|add:var2627|indian_number }}</th>
+                    </tr>
+                    <tr>
+                        <th style="border:1px solid black; width:35%">Component</th>
+                        <th style="border:1px solid black; width:20%">Per Month (Rs.)</th>
+                        <th style="border:1px solid black; width:20%">Per Annum (Rs.)</th>
+                        <th style="border:1px solid black; width:25%">Taxable/Non-Taxable</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Basic Salary</td>
+                        <td>{{ basic|indian_number }}</td>
+                        <td>{{ basic_annual|indian_number }}</td>
+                        <td>Taxable</td>
+                    </tr>
+                    <tr><td>House Rent Allowance</td><td>{{ hra|indian_number }}</td><td>{{ hra_annual|indian_number }}</td><td>Taxable</td></tr>
+                    <tr><td>Special Allowance</td><td>{{ special|indian_number }}</td><td>{{ special_annual|indian_number }}</td><td>Taxable</td></tr>
+                    <tr class="bold"><td>Gross (A)</td><td>{{ gross_a|indian_number }}</td><td>{{ gross_a_annual|indian_number }}</td><td></td></tr>
+                    
+                    <tr><td>Retention Bonus</td><td>NA</td><td>{{ retention_annual|indian_number }}</td><td>Paid Annually</td></tr>
+                    <tr><td>Telephone Allowance</td><td>{{ telephone|indian_number }}</td><td>{{ telephone_annual|indian_number }}</td><td></td></tr>
+                    <tr><td>Provident Fund Employer</td><td>{{ pf_employer|indian_number }}</td><td>{{ pf_employer_annual|indian_number }}</td><td></td></tr>
+                    
+                    {% if is_office %}
+                        <tr><td>Food Allowance</td><td>{{ food|indian_number }}</td><td>{{ food_annual|indian_number }}</td><td></td></tr>
+                    {% endif %}
+                    
+                    <tr><td>Gratuity Provision</td><td>{{ gratuity|indian_number }}</td><td>{{ gratuity_annual|indian_number }}</td><td></td></tr>
+                    
+                    <tr class="bold"><td>Gross (B)</td><td>{{ gross_b_monthly|indian_number }}</td><td>{{ gross_b_annual|indian_number }}</td><td></td></tr>
+                    
+                    <tr class="bold"><td>Gross TCTC (A+B)</td><td>{{ gross_a_monthly|add:gross_b_monthly|indian_number }}</td><td>{{ gross_a_annual|add:gross_b_annual|indian_number }}</td><td></td></tr>
+                    
+                    <tr><td>Provident Fund Employee</td><td>{{ pf_employee|indian_number }}</td><td>{{ pf_employee_annual|indian_number }}</td><td></td></tr>
+                    <tr><td>Professional Tax</td><td>{{ prof_tax|indian_number }}</td><td>{{ prof_tax_annual|indian_number }}</td><td></td></tr>
+                    <tr><td>Insurance Premium</td><td>{{ insurance|indian_number }}</td><td>{{ insurance_annual|indian_number }}</td><td></td></tr>
+                    <tr><td>Meal Card Deduction</td><td>{{ meal|indian_number }}</td><td>{{ meal_annual|indian_number }}</td><td></td></tr>
+                    <tr class="bold"><td>Deductions (C)</td><td>{{ deductions_monthly|indian_number }}</td><td>{{ deductions_annual|indian_number }}</td><td></td></tr>
+                    
+                    <tr class="bold"><td>Net Pay (A-C)</td><td>{{ net_pay_monthly|indian_number }}</td><td>{{ net_pay_annual|indian_number }}</td><td></td></tr>
+                    
+                    <!-- {% if not is_office %}
+                        <tr><td>Food Allowance</td><td>{{ food|indian_number }}</td><td>{{ food_annual|indian_number }}</td><td></td></tr>
+                    {% endif %} -->
+                </tbody>
+            </table>
+            </div>
+            <br>
+
+            {% if not is_office %}
+                <table>
+                    <tr>
+                        <th rowspan="2"
+                            style="border:1px solid black; text-align:center; vertical-align:middle; width:35%;">
+                            <i>Food Allowance</i>
+                        </th>
+
+                        <!-- FY spans 2 columns -->
+                        <th colspan="1" style="text-align: center;">Per Month (Rs.)</th>
+                        <th colspan="1" style="text-align: center;">Per Annum (Rs.)</th>
+                    </tr>
+                    <tr>
+                        <!-- <th colspan="1" style="text-align: center;">Particulars</th> -->
+                        <th colspan="1" style="text-align: center;">{{ food|indian_number }}</th>
+                        <th colspan="1" style="text-align: center;">{{ food_annual|indian_number }}</th>
+                </table>
+            {% endif %}
+
+            <p>For NeXHS Renewables Pvt. Ltd.,</p></br>
+            
+            <div class="signature">
+                <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 40px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 50%; text-align: left; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>Sudhansu Bhusan Prusty</strong><br>
+                                <strong>Managing Director</strong>
+                            </td>
+                            <td style="width: 50%; text-align: right; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>{{ letter.employee_name }}</strong><br>
+                                <strong>
+                                    {% if letter.promotion_designation %}
+                                        {{ letter.promotion_designation }}
+                                    {% else %}
+                                        {{ letter.designation }}
+                                    {% endif %}
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            
+            <!-- Annexure B -->
+
+            <!-- <table style="width:80%; border-collapse: collapse; table-layout:auto; justify-items: center;" >
+                <thead>
+                    <tr>
+                        <th colspan="3" style="border:1px solid black; text-align: center; column-width: 100;">Annexure - B</th>
+                    </tr>
+                     <tr>
+                        <th colspan="3" style="text-align: center;">Performance Linked Variable Pay</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2"
+                            style="border:1px solid black; text-align:center; vertical-align:middle; width:35%;">
+                            <i>Particulars</i>
+                        </th>
+
+                        <th colspan="2"
+                            style="border:1px solid black; text-align:center;">
+                            <i>FY 2026-27 &nbsp; (Apr'26 to Mar'27)</i>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="1" style="text-align: center;">Per Month (Rs.)</th>
+                        <th colspan="1" style="text-align: center;">Per Annum (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="1" style="text-align: center;">Variable Pay</td>
+                        <td colspan="1" style="text-align: center;">{{ var2627|indian_number }} / 12</td>
+                        <td colspan="1" style="text-align: center;">{{ var2627|indian_number }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">Payable details</td>
+                        <td colspan="2">Payable in April 2027</td>
+                    </tr>
+                </tbody>
+            </table>
+            </br>
+
+            <p>For NeXHS Renewables Pvt. Ltd.,</p></br>
+            
+            <div class="signature">
+                <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 40px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 50%; text-align: left; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>Sudhansu Bhusan Prusty</strong><br>
+                                <strong>Managing Director</strong>
+                            </td>
+                            <td style="width: 50%; text-align: right; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>{{ letter.employee_name }}</strong><br>
+                                <strong>
+                                    {% if letter.promotion_designation %}
+                                        {{ letter.promotion_designation }}
+                                    {% else %}
+                                        {{ letter.designation }}
+                                    {% endif %}
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div> -->
+            
+            <pdf:nextpage>
+            <div id="page-header">
+                {% include "header.html" %}
+            </div>
+
+            <!-- Annexure B -->
+
+            <table style="width:80%; border-collapse: collapse; table-layout:auto; justify-items: center;" >
+                <thead>
+                    <tr>
+                        <th colspan="3" style="border:1px solid black; text-align: center; column-width: 100;">Annexure - B</th>
+                    </tr>
+                     <tr>
+                        <th colspan="3" style="text-align: center;">Performance Linked Variable Pay</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2"
+                            style="border:1px solid black; text-align:center; vertical-align:middle; width:35%;">
+                            <i>Particulars</i>
+                        </th>
+
+                        <!-- FY spans 2 columns -->
+                        <th colspan="2"
+                            style="border:1px solid black; text-align:center;">
+                            <i>FY 2026-27 &nbsp; (Apr'26 to Mar'27)</i>
+                        </th>
+                    </tr>
+                    <tr>
+                        <!-- <th colspan="1" style="text-align: center;">Particulars</th> -->
+                        <th colspan="2" style="text-align: center;">Per Annum (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="1" style="text-align: center;">Variable Pay</td>
+                        <td colspan="2" style="text-align: center;">{{ var2627|indian_number }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">Payable details</td>
+                        <td colspan="2" style="text-align: center;">Payable in April 2027</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Annexure C -->
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="3" style="border:1px solid black; text-align: center; column-width: 100;">Annexure - C</th>
+                    </tr>
+                     <tr>
+                        <th colspan="3" style="text-align: center;">Performance Linked Variable Pay (FY 2025-26)</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2"
+                            style="border:1px solid black; text-align:center; vertical-align:middle; width:35%;">
+                            <i>Particulars</i>
+                        </th>
+
+                        <!-- FY spans 2 columns -->
+                        <th colspan="2"
+                            style="border:1px solid black; text-align:center;">
+                            <i>FY 2026-27 &nbsp; (Oct'25 to Mar'26)</i>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="text-align: center;">Per Annum (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;">Variable Pay</td>
+                        <td colspan="2" style="text-align: center;">{{ var2526|indian_number }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="text-align: center;">Payable details</td>
+                        <td colspan="2" style="text-align: center;">Payable in April 2026</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- Standard Terms -->
+            <h4>Standard Terms & Conditions:</h4>
+            <ol>
+                <li>The Revised Compensation Package will be effective from 1st April 2026.</li>
+                <li>TCTC will be subject to TDS & Other applicable Statutory Deductions.</li>
+                <li>The Employee is eligible for an annual variable pay incentive of Rs.{{ var2627|indian_number }}/- which is a part of their Annual CTC. This variable component is earned based on a 50/50 weighted formula: <strong>50% - Individual Performance:</strong> Based on achievement of Key Performance Indicators (KPIs) set during the annual performance review. <strong>50% - Employer Performance:</strong> Based on company achievement of pre-defined financial or operational targets (EBITDA, Revenue, EBITDA target).</li>
+                <li>Individual Compensation structure is subject to change without affecting the emoluments adversely.</li>
+                <li>Payment of Gratuity will be subject to the provisions of The Payment of Gratuity Act, 1972.</li>
+            </ol>
+            
+            <p>For NeXHS Renewables Pvt. Ltd.,</p>
+            <br>
+
+            <div class="signature">
+                <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 40px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 50%; text-align: left; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>Sudhansu Bhusan Prusty</strong><br>
+                                <strong>Managing Director</strong>
+                            </td>
+                            <td style="width: 50%; text-align: right; vertical-align: bottom; padding: 0; border: 0px;">
+                                _________________________<br>
+                                <strong>Susila Leon</strong><br>
+                                <strong>HR Manager</strong>
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <hr>
+            <h4 style="text-align: center;">Acceptance</h4>
+            <p>I have read and understood the terms and conditions mentioned in this Compensation Package Details Annexure and I hereby confirm unconditional acceptance of the same.</p>
+            <p>Name: <strong>{{ letter.employee_name }}</strong></p>
+            <p>Signature: _________________________ &nbsp;&nbsp; Date: _______________</p>
+        </div>
+    </div>
+</body>
+</html>

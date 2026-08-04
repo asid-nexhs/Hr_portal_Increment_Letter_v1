@@ -1,0 +1,55 @@
+# Core Django Framework
+Django==5.0.3
+asgiref==3.11.1
+sqlparse==0.5.5
+
+# Database
+mysqlclient==2.2.8
+
+# REST API
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.5.1
+rest-framework-simplejwt==0.0.2
+
+# CORS
+django-cors-headers==4.3.1
+
+# Environment Variables
+python-dotenv==3.8
+python-decouple==3.8
+
+# PDF Generation
+xhtml2pdf==0.2.17
+reportlab==4.4.4
+svglib==2.0.2
+cssselect2==0.9.0
+tinycss2==1.4.0
+lxml==6.1.1
+Pillow==10.2.0
+
+# Data Processing (CSV/Excel Import)
+pandas==2.2.2
+openpyxl==3.1.2
+numpy==1.26.4
+
+# Production Server
+gunicorn==26.0.0
+whitenoise==6.12.0
+
+# Security
+cryptography==49.0.0
+PyJWT==2.10.1
+
+# Utilities
+requests==2.31.0
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Logging
+loguru==0.7.3
+
+# Optional but recommended
+# django-filter==23.5  # For advanced filtering
+# django-crispy-forms==2.1  # For better forms
+# django-celery-results==2.5.1  # For async tasks
+# redis==5.0.0  # For caching
