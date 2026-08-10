@@ -15,17 +15,30 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('Admin role created successfully'))
         
         # Check if admin user exists
-        if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser(
-                email='admin@example.com',
-                username='admin',
-                password='admin123',
-                first_name='Admin',
-                last_name='User',
+        # if not User.objects.filter(username='admin').exists():
+        #     User.objects.create_superuser(
+        #         email='susila.leon@nexhs.com',
+        #         username='Nex22113',
+        #         password='Dec@2024',
+        #         first_name='Susila',
+        #         last_name='Leon',
+        #         role=admin_role
+        #    )
+        #     self.stdout.write(self.style.SUCCESS('Admin user created successfully'))
+        #     self.stdout.write('Email: admin@example.com')
+        #     self.stdout.write('Password: admin123')
+        # else:
+        #     self.stdout.write(self.style.WARNING('Admin user already exists'))
+
+        User.objects.create_superuser(
+                email='susila.leon@nexhs.com',
+                username='Nex22113',
+                password='Dec@2024',
+                first_name='Susila',
+                last_name='Leon',
                 role=admin_role
-            )
-            self.stdout.write(self.style.SUCCESS('Admin user created successfully'))
-            self.stdout.write('Email: admin@example.com')
-            self.stdout.write('Password: admin123')
-        else:
-            self.stdout.write(self.style.WARNING('Admin user already exists'))
+           )
+
+        self.stdout.write(self.style.SUCCESS('Admin user created successfully'))
+        self.stdout.write('Email: admin@example.com')
+        self.stdout.write('Password: admin123')

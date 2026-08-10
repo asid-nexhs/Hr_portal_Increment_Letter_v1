@@ -81,13 +81,13 @@ function Login() {
                         </p>
                         
                         {/* Optional: Default credentials hint for testing */}
-                        <div className="text-center small text-muted">
+                        {/* <div className="text-center small text-muted">
                             <p className="mb-0">Default admin credentials:</p>
                             <p className="mb-0">
                                 <strong>Username:</strong> admin<br />
                                 <strong>Password:</strong> admin123
                             </p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

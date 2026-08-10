@@ -44,12 +44,12 @@
                 
                 <p>As we embark on another year of excellence, we sincerely thank you for your valuable contributions and dedicated efforts towards the organization's performance during the financial year <strong>2025–26</strong>. Your commitment and consistent performance are highly appreciated.</p>
                 
-                <p>In recognition of your performance and continued efforts, we are pleased to inform you that your <strong>gross salary has been revised to Rs.{{ gross_a|indian_number }}/- per month</strong>, along with a <strong>Retention Bonus</strong>, effective from <strong>1st April 2026</strong>. The detailed breakup of your revised compensation structure is enclosed as <strong>Annexure A</strong> for your reference.</p>
+                <p>In recognition of your performance and continued efforts, we are pleased to inform you that your <strong>gross salary has been revised to Rs.{{ gross_a|indian_number }}/- per month</strong>{% if letter.retention_annual > 0 %}, along with a <strong>Retention Bonus</strong> {% endif %}, effective from <strong>{{letter.effective_date|date:"jS F Y"}}</strong>. The detailed breakup of your revised compensation structure is enclosed as <strong>Annexure A</strong> for your reference.</p>
                 
                 <p>Further, based on your performance and the overall performance of the organization, the Company is pleased to <strong>award you the Performance Linked Variable Pay</strong>, as detailed in Annexure B, along with the <strong>FY 2025–26 variable pay</strong>, as provided in Annexure C. These amounts will be <strong>paid annually</strong>, in accordance with company policy.</p>
                 
                 {% if letter.promotion_designation %}
-                <p>Additionally, in recognition of your contributions, we are pleased to inform you of your <strong>promotion</strong>, and you are hereby <strong>Promoted as "{{ letter.promotion_designation }}"</strong>, effective from <strong>1st April 2026</strong>.</p>
+                <p>Additionally, in recognition of your contributions, we are pleased to inform you of your <strong>promotion</strong>, and you are hereby <strong>Promoted as "{{ letter.promotion_designation }}"</strong>, effective from <strong>{{letter.effective_date|date:"jS F Y"}}</strong>.</p>
                 {% endif %}
                 
                 <p>Please note that the contents of this letter, including your compensation details, are <strong>strictly confidential</strong> and must not be disclosed or discussed with anyone within or outside the organization.</p>
@@ -418,7 +418,7 @@
             <!-- Standard Terms -->
             <h4>Standard Terms & Conditions:</h4>
             <ol>
-                <li>The Revised Compensation Package will be effective from 1st April 2026.</li>
+                <li>The Revised Compensation Package will be effective from {{letter.effective_date|date:"jS F Y"}}.</li>
                 <li>TCTC will be subject to TDS & Other applicable Statutory Deductions.</li>
                 <li>The Employee is eligible for an annual variable pay incentive of Rs.{{ var2627|indian_number }}/- which is a part of their Annual CTC. This variable component is earned based on a 50/50 weighted formula: <strong>50% - Individual Performance:</strong> Based on achievement of Key Performance Indicators (KPIs) set during the annual performance review. <strong>50% - Employer Performance:</strong> Based on company achievement of pre-defined financial or operational targets (EBITDA, Revenue, EBITDA target).</li>
                 <li>Individual Compensation structure is subject to change without affecting the emoluments adversely.</li>
