@@ -1,0 +1,22 @@
+name: Test Production Server Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+      - name: Test runner
+        shell: powershell
+        run: |
+          Write-Host "Runner is working"
+          Write-Host "Computer: $env:COMPUTERNAME"
+          Write-Host "User: $env:USERNAME"
+          Write-Host "PowerShell: $($PSVersionTable.PSVersion)"
+
+      - name: Check application directory
+        shell: powershell
+        run: |
+          Test-Path "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main"
