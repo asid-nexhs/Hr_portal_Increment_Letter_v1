@@ -1,0 +1,253 @@
+name: Deploy HR Portal Production
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+
+      # -------------------------------------------------
+      # 1. Checkout GitHub repository
+      # -------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -------------------------------------------------
+      # 2. Define production paths
+      # -------------------------------------------------
+      - name: Set deployment variables
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $env:PROD_ROOT = "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main"
+          $env:FRONTEND = "$env:PROD_ROOT\frontend"
+          $env:BACKEND = "$env:PROD_ROOT\backend"
+
+          Write-Host "Production root:"
+          Write-Host $env:PROD_ROOT
+
+      # -------------------------------------------------
+      # 3. Verify production exists
+      # -------------------------------------------------
+      - name: Verify production installation
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $prod = "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main"
+
+          if (!(Test-Path $prod)) {
+              throw "Production directory does not exist: $prod"
+          }
+
+          if (!(Test-Path "$prod\frontend\build")) {
+              throw "Production frontend build does not exist."
+          }
+
+          if (!(Test-Path "$prod\backend\manage.py")) {
+              throw "Production Django manage.py does not exist."
+          }
+
+          Write-Host "Production installation verified."
+
+      # -------------------------------------------------
+      # 4. Show Git version being deployed
+      # -------------------------------------------------
+      - name: Show deployment version
+        shell: powershell
+        run: |
+          Write-Host "Commit:"
+          git rev-parse HEAD
+
+          Write-Host ""
+          Write-Host "Branch:"
+          git branch --show-current
+
+      # -------------------------------------------------
+      # 5. Build React
+      # -------------------------------------------------
+      - name: Install frontend dependencies
+        shell: powershell
+        working-directory: frontend
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          npm ci
+
+      - name: Build React frontend
+        shell: powershell
+        working-directory: frontend
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          npm run build
+
+          if (!(Test-Path "build")) {
+              throw "React build failed: build directory not found."
+          }
+
+          Write-Host "React build completed successfully."
+
+      # -------------------------------------------------
+      # 6. Create production backup
+      # -------------------------------------------------
+      - name: Backup current frontend
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $prodBuild = "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main\frontend\build"
+
+          $backupRoot = "C:\Applications\HR-Portal-Backups"
+
+          if (!(Test-Path $backupRoot)) {
+              New-Item -ItemType Directory -Path $backupRoot -Force | Out-Null
+          }
+
+          $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+
+          $backup = Join-Path $backupRoot "frontend-$timestamp"
+
+          Write-Host "Creating backup:"
+          Write-Host $backup
+
+          Copy-Item $prodBuild $backup -Recurse -Force
+
+          Write-Host "Frontend backup completed."
+
+      # -------------------------------------------------
+      # 7. Deploy React build
+      # -------------------------------------------------
+      - name: Deploy React build
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $source = Join-Path $env:GITHUB_WORKSPACE "frontend\build"
+
+          $destination = "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main\frontend\build"
+
+          Write-Host "Source:"
+          Write-Host $source
+
+          Write-Host "Destination:"
+          Write-Host $destination
+
+          if (!(Test-Path $source)) {
+              throw "Built frontend not found."
+          }
+
+          if (Test-Path $destination) {
+              Remove-Item $destination -Recurse -Force
+          }
+
+          New-Item -ItemType Directory -Path $destination -Force | Out-Null
+
+          Copy-Item "$source\*" $destination -Recurse -Force
+
+          Write-Host "React frontend deployed."
+
+      # -------------------------------------------------
+      # 8. Deploy Django source
+      # -------------------------------------------------
+      - name: Deploy Django source
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $source = Join-Path $env:GITHUB_WORKSPACE "backend"
+
+          $destination = "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main\backend"
+
+          Write-Host "Deploying Django source..."
+
+          robocopy $source $destination `
+            /E `
+            /XD `
+              ".\venv" `
+              ".\logs" `
+              ".\__pycache__" `
+              ".\staticfiles" `
+            /XF `
+              ".env" `
+              ".env.production" `
+              "error.log"
+
+          $exitCode = $LASTEXITCODE
+
+          if ($exitCode -gt 7) {
+              throw "Robocopy failed with exit code $exitCode"
+          }
+
+          Write-Host "Django source deployment completed."
+
+      # -------------------------------------------------
+      # 9. Update Python dependencies
+      # -------------------------------------------------
+      - name: Update Python dependencies
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $venvPython = "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main\backend\venv\Scripts\python.exe"
+
+          if (!(Test-Path $venvPython)) {
+              throw "Production Python virtual environment not found."
+          }
+
+          & $venvPython -m pip install -r "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main\backend\requirements-prod.txt"
+
+      # -------------------------------------------------
+      # 10. Django checks
+      # -------------------------------------------------
+      - name: Django production check
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $backend = "C:\Applications\Deployement\Hr_portal_Increment_Letter_v1-main\backend"
+
+          Push-Location $backend
+
+          try {
+              & ".\venv\Scripts\python.exe" manage.py check --deploy
+
+              if ($LASTEXITCODE -ne 0) {
+                  throw "Django deployment check failed."
+              }
+          }
+          finally {
+              Pop-Location
+          }
+
+      # -------------------------------------------------
+      # 11. Deployment summary
+      # -------------------------------------------------
+      - name: Deployment summary
+        shell: powershell
+        run: |
+          Write-Host ""
+          Write-Host "========================================="
+          Write-Host " HR PORTAL DEPLOYMENT COMPLETED"
+          Write-Host "========================================="
+          Write-Host ""
+          Write-Host "Commit:"
+          git rev-parse HEAD
+          Write-Host ""
+          Write-Host "Frontend deployed."
+          Write-Host "Django source deployed."
+          Write-Host "Production .env files preserved."
+          Write-Host "Python virtual environment preserved."
+          Write-Host ""
+          Write-Host "IMPORTANT:"
+          Write-Host "Django process was NOT restarted."
+          Write-Host "========================================="
