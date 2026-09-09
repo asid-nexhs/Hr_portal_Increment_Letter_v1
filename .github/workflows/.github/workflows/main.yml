@@ -1,0 +1,59 @@
+name: Inspect HR Portal
+
+on:
+  workflow_dispatch:
+
+jobs:
+  inspect:
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show repository structure
+        shell: powershell
+        run: |
+          Write-Host "Repository location:"
+          Get-Location
+
+          Write-Host ""
+          Write-Host "Top-level files:"
+          Get-ChildItem -Force
+
+          Write-Host ""
+          Write-Host "Backend:"
+          Get-ChildItem .\backend -Force
+
+          Write-Host ""
+          Write-Host "Frontend:"
+          Get-ChildItem .\frontend -Force
+
+      - name: Check project files
+        shell: powershell
+        run: |
+          Write-Host "Checking important files..."
+
+          if (Test-Path ".\backend\manage.py") {
+              Write-Host "OK: backend/manage.py"
+          } else {
+              Write-Error "backend/manage.py not found"
+          }
+
+          if (Test-Path ".\backend\requirements.txt") {
+              Write-Host "OK: backend/requirements.txt"
+          } else {
+              Write-Error "backend/requirements.txt not found"
+          }
+
+          if (Test-Path ".\frontend\package.json") {
+              Write-Host "OK: frontend/package.json"
+          } else {
+              Write-Error "frontend/package.json not found"
+          }
+
+          if (Test-Path ".\frontend\package-lock.json") {
+              Write-Host "OK: frontend/package-lock.json"
+          } else {
+              Write-Error "frontend/package-lock.json not found"
+          }
